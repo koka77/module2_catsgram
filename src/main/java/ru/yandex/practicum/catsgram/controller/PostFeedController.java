@@ -10,7 +10,9 @@ import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.yandex.practicum.catsgram.Constants.SORTS;
 
@@ -22,6 +24,18 @@ public class PostFeedController {
 
     public PostFeedController(PostService postService) {
         this.postService = postService;
+    }
+
+    public Collection<Post> findPostsByUser(String authorId, Integer size, String sort) {
+        return findPostsByUser(authorId).stream().sorted((p0, p1) -> {
+                    int comp = p0.getCreationDate().compareTo(p1.getCreationDate());
+                    if (sort.equals("desc")) {
+                        comp = -1 * comp;
+                    }
+                    return comp;
+                })
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
 //    @PostMapping

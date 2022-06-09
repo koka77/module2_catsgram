@@ -14,6 +14,12 @@ public class User {
 
     private String nickname;
 
+    public User(String id, String username, String nickname) {
+        this.id = id;
+        this.username = username;
+        this.nickname = nickname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

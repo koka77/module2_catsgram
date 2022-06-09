@@ -1,27 +1,30 @@
 package ru.yandex.practicum.catsgram.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.catsgram.exception.PostNotFoundException;
+import ru.yandex.practicum.catsgram.dao.PostDao;
 import ru.yandex.practicum.catsgram.exception.UserNotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static ru.yandex.practicum.catsgram.Constants.DESCENDING_ORDER;
+import java.util.Collection;
 
 @Service
 public class PostService {
-    @Autowired
+
+    private final PostDao postDao;
     private final UserService userService;
 
 
 
-    public PostService(UserService userService) {
+    public PostService(PostDao postDao, UserService userService) {
+        this.postDao = postDao;
         this.userService = userService;
+    }
+
+    public Collection<Post> findPostsByUser(String userId) {
+        User user = userService.findUserById(userId).orElseThrow(() -> new UserNotFoundException("Пользователь с идентификатором " + userId + " не найден."));
+
+        return postDao.findPostsByUser(user);
     }
 
     public Post create(Post post) {

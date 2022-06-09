@@ -38,8 +38,8 @@ public class UserController {
         return userService.findUserByEmail(userMail);
     }
     */
-    @GetMapping("/login")
-    public Optional<User> getUser(@PathVariable("userId") String login){
+    @GetMapping("/{login}")
+    public Optional<User> getUser(@PathVariable String login){
         return userService.findUserById(login);
     }
 }
