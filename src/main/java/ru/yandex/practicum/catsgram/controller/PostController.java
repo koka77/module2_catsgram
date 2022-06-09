@@ -1,5 +1,6 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +19,12 @@ import static ru.yandex.practicum.catsgram.Constants.SORTS;
 @RestController
 public class PostController {
     private final PostService postService;
-
+@Autowired
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
-    @GetMapping("/posts")
+/*    @GetMapping("/posts")
     public List<Post> findAll(
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = "10", required = false) Integer size,
@@ -40,15 +41,15 @@ public class PostController {
         }
         Integer from = page * size;
         return postService.findAll(size, from, sort);
-    }
+    }*/
 
     @PostMapping(value = "/post")
     public Post create(@RequestBody Post post) {
         return postService.create(post);
     }
 
-    @GetMapping("/post/{postId}")
+/*    @GetMapping("/post/{postId}")
     public Post findPost(@PathVariable("postId") Integer postId) {
         return postService.findPostById(postId);
-    }
+    }*/
 }
